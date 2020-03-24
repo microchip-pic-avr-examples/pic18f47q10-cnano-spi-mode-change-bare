@@ -69,7 +69,8 @@ static void PORT_init(void)
     TRISC &= ~_TRISC_TRISC5_MASK;       /* SDO channel as output */
     TRISC &= ~_TRISC_TRISC6_MASK;       /* SS channel as output */
     
-    ANSELC &= ~_ANSELC_ANSELC6_MASK;    /* Set RC6 as digital */
+    ANSELC = ~_ANSELC_ANSELC4_MASK    
+           & ~_ANSELC_ANSELC6_MASK;    /* Set RC4 and RC6 as digital */
 }
 
 static void SPI1_init(void)
