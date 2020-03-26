@@ -76,10 +76,7 @@ static void PORT_init(void)
 static void SPI1_init(void)
 {
     /* SSP1ADD = 1 */
-    SSP1ADD = _SSP1ADD_MSK0_MASK;
-    
-    /* CKE = 1 */
-    SSP1STAT |= _SSP1STAT_CKE1_MASK;        
+    SSP1ADD = _SSP1ADD_MSK0_MASK;       
     
     /* Enable module, MSSP in SPI Master mode, CKP = 1 */
     SSP1CON1 = _SSP1CON1_SSPEN_MASK
