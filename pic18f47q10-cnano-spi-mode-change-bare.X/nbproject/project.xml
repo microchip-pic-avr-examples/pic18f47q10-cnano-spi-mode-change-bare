@@ -3,7 +3,7 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>pic18f47q10-cnano-spi-change-data-transfer-type-bare</name>
+            <name>pic18f47q10-cnano-spi-mode-change-bare</name>
             <creation-uuid>14c23b72-8ea0-4048-8ac0-64ead0be8a02</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
