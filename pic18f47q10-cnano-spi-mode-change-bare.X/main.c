@@ -30,14 +30,10 @@
 #include <xc.h>
 #include <stdint.h>
 
-#define PPS_CONFIG_RC3_SPI_SCK      0x0F
-#define PPS_CONFIG_RC4_SPI_SDI      0x14
-#define PPS_CONFIG_RC5_SPI_SDO      0x10
-
-static void CLK_init(void);
-static void PPS_init(void);
-static void PORT_init(void);
-static void SPI1_init(void);
+static void CLK_Initialize(void);
+static void PPS_Initialize(void);
+static void PORT_Initialize(void);
+static void SPI1_Initialize(void);
 static void SPI1_slaveSelect(void);
 static void SPI1_slaveDeselect(void);
 static uint8_t SPI1_exchangeByte(uint8_t data);
@@ -45,74 +41,69 @@ static uint8_t SPI1_exchangeByte(uint8_t data);
 uint8_t writeData = 1;          /* Data that will be transmitted */
 uint8_t receiveData = 0;        /* Data that will be received */
 
-static void CLK_init(void)
+static void CLK_Initialize(void)
 {
-    OSCCON1 = _OSCCON1_NOSC1_MASK 
-            | _OSCCON1_NOSC2_MASK;        /* HFINTOSC Oscillator */
+    OSCCON1 = 0x60;        /* HFINTOSC Oscillator */
     
-    OSCFRQ = _OSCFRQ_FRQ1_MASK;           /* HFFRQ 4 MHz */
+    OSCFRQ = 0x02;         /* HFFRQ 4 MHz */
 }
 
-static void PPS_init(void)
+static void PPS_Initialize(void)
 {
-    RC3PPS = PPS_CONFIG_RC3_SPI_SCK;               /* SCK channel on RC3 */
+    RC3PPS = 0x0F;               /* SCK channel on RC3 */
  
-    SSP1DATPPS = PPS_CONFIG_RC4_SPI_SDI;           /* SDI channel on RC4 */
+    SSP1DATPPS = 0x14;           /* SDI channel on RC4 */
     
-    RC5PPS = PPS_CONFIG_RC5_SPI_SDO;               /* SDO channel on RC5 */
+    RC5PPS = 0x10;               /* SDO channel on RC5 */
 }
 
-static void PORT_init(void)
+static void PORT_Initialize(void)
 {
-    TRISC &= ~_TRISC_TRISC3_MASK;       /* SCK channel as output */
-    TRISC |= _TRISC_TRISC4_MASK;        /* SDI channel as input */
-    TRISC &= ~_TRISC_TRISC5_MASK;       /* SDO channel as output */
-    TRISC &= ~_TRISC_TRISC6_MASK;       /* SS channel as output */
+    /* SDI as input; SCK, SDO, SS as output */
+    TRISC = 0x97;
     
-    ANSELC = ~_ANSELC_ANSELC4_MASK    
-           & ~_ANSELC_ANSELC6_MASK;    /* Set RC4 and RC6 as digital */
+    /* SCK, SDI, SDO, SS as digital pins */
+    ANSELC = 0x87;      
 }
 
-static void SPI1_init(void)
+static void SPI1_Initialize(void)
 {
     /* SSP1ADD = 1 */
-    SSP1ADD = _SSP1ADD_MSK0_MASK;       
+    SSP1ADD = 0x01;       
     
     /* Enable module, MSSP in SPI Master mode, CKP = 1 */
-    SSP1CON1 = _SSP1CON1_SSPEN_MASK
-             | _SSP1CON1_CKP_MASK
-             | _SSP1CON1_SSPM1_MASK
-             | _SSP1CON1_SSPM3_MASK; 
+    SSP1CON1 = 0x3A; 
 }
 
 static void SPI1_slaveSelect(void)
 {
-    PORTC &= ~_PORTC_RC6_MASK;          /* Set SS pin value to LOW */
+    LATCbits.LATC6 = 0;          /* Set SS1 pin value to LOW */
 }
 
 static void SPI1_slaveDeselect(void)
 {
-    PORTC |= _PORTC_RC6_MASK;           /* Set SS pin value to HIGH */
+    LATCbits.LATC6 = 1;          /* Set SS1 pin value to LOW */
 }
 
 static uint8_t SPI1_exchangeByte(uint8_t data)
 {
     SSP1BUF = data;
     
-    while(!(SSP1STAT & _SSP1STAT_BF_MASK))   /* Wait until data is exchanged */
+    while(!PIR3bits.SSP1IF) /* Wait until data is exchanged */
     {
         ;
-    }
+    }   
+    PIR3bits.SSP1IF = 0;
     
     return SSP1BUF;
 }
 
 int main(void)
 {
-    CLK_init();
-    PPS_init();
-    PORT_init();
-    SPI1_init();
+    CLK_Initialize();
+    PPS_Initialize();
+    PORT_Initialize();
+    SPI1_Initialize();
     
     while(1)
     {
