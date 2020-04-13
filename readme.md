@@ -29,6 +29,6 @@ The following configurations must be made for this project:
 |RC6 (SS)      | Digital Output     |
 
 ## Operation
-Run the code, connect an oscilloscope or logic analyzer to the pins and see the results. The device will transmit 'writeData' continuously through its SDO channel in data mode 3.
+Run the code, connect an oscilloscope or logic analyzer to the pins and see the results. The device will transmit `writeData` continuously through its SDO channel in data mode 3.
 
 <img src="Images/PIC18F47Q10-Curiosity-Nano.png" alt="Hardware Setup"/>
