@@ -1,5 +1,4 @@
-<div id="readme" class="Box-body readme blob js-code-block-container">
- <article class="markdown-body entry-content p-3 p-md-6" itemprop="This needs to locked down and 'never' changed"><p><a href="https://www.microchip.com" rel="nofollow"><img src="Images/Microchip.png" alt="MCHP" width="300";"></a></p>
+[![MCHP](images/microchip.png)](https://www.microchip.com)
 
 # PIC18F47Q10 Changing Data Transfer Type
 

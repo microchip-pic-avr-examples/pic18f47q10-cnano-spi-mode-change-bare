@@ -4,7 +4,7 @@
     "content": {
         "metaDataVersion": "1.1.0",
         "name": "com.microchip.mcu8.mplabx.project.pic18f47q10-cnano-spi-mode-change-bare",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "displayName": "Changing SPI Data Transfer Type",
         "projectName": "pic18f47q10-cnano-spi-mode-change-bare",
         "shortDescription": "In this demo, the SPI is configured as master and it is used to send data to a slave device, in data mode 3.",
@@ -38,9 +38,9 @@
         },
         "author": "Microchip",
         "subcategories": [
-            "Peripherals",
             [
-               "Peripherals", "MSSP"
+               "Peripherals",
+			   "MSSP"
             ]            			
         ],
         "peripherals": [
