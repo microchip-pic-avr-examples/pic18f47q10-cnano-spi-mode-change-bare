@@ -7,7 +7,7 @@
         "version": "1.0.4",
         "displayName": "Changing SPI Data Transfer Type",
         "projectName": "pic18f47q10-cnano-spi-mode-change-bare",
-        "shortDescription": "In this demo, the SPI is configured as master and it is used to send data to a slave device, in data mode 3.",
+        "shortDescription": "In this demo, the SPI is configured as host and it is used to send data to a client device, in data mode 3.",
         "ide": {
             "name": "MPLAB X",
             "semverRange": ">=5.30.0"
